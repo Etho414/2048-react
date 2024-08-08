@@ -31,8 +31,9 @@ function App() {
   function removeSpot(x,y) {
     game_array[x][y] = 0;
   }
-  function shoveArray(dir) { // TODO: Rewrite shove LR algorithim
+  function shoveArray(dir) { 
     if (dir == "r" || dir == "l") {
+
       
       for (let i = 0; i < heightGame; i++) {
         let zeroArray = []
@@ -94,7 +95,6 @@ function App() {
     for (let i = 0; i < game_array.length; i++) {
       for (let v = 0; v < game_array[i].length - 1; v++) {
         if (game_array[i][v] && game_array[i][v] == game_array[i][v + 1] ) {
-          console.log("Should mult")
           multSpot(i,v)
           removeSpot(i,v + 1)
         } 
