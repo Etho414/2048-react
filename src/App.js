@@ -9,7 +9,7 @@ function App() {
   const widthGamePercent = 100/widthGame + "%"
   let [game_array] = useState([])
   const [loaded_game, setLoadGame] = useState(false)
-  const [updateTicker, setTicker] = useState(0)
+  const [update_ticker, setTicker] = useState(0)
 
   function constructGameArray() {
     for (let i = 0; i < heightGame; i++) {
@@ -32,7 +32,7 @@ function App() {
     }
     console.log(string)
   }
-  printGameArray()
+
   function multSpot(x,y) {
     game_array[x][y] = game_array[x][y] * 2;
   }
@@ -40,27 +40,30 @@ function App() {
   function removeSpot(x,y) {
     game_array[x][y] = 0;
   }
+
   function shoveArray(dir) { 
     if (dir == "r" || dir == "l") {
-
-      
       for (let i = 0; i < heightGame; i++) {
+
         let zeroArray = []
         let nonZeroArray = []
+
         for (let v = 0; v < widthGame; v++) {
           if (game_array[i][v] == 0) {
             zeroArray.push(0)
           }  else {
             nonZeroArray.push(game_array[i][v])
           }          
-        
         }
+
         let doneArray = []
+        
         if (dir == "l") {
           doneArray = [...nonZeroArray, ...zeroArray]
         } else {
           doneArray = [...zeroArray, ...nonZeroArray]
         }
+
         game_array[i] = doneArray
       }
     } else if (dir == "u"  || dir == "d") {
@@ -68,6 +71,7 @@ function App() {
       for (let v = 0; v < widthGame; v++) {
         let zeroArray = []
         let nonZeroArray = []
+
         for (let i  = 0; i < heightGame; i++) { 
             if (game_array[i][v] == 0) {
               zeroArray.push(0) 
@@ -75,30 +79,32 @@ function App() {
               nonZeroArray.push(game_array[i][v])
           }
         }
+
         let doneArray;  
+
         if (dir == "u") {
          doneArray = [...nonZeroArray, ...zeroArray] 
         } else {
           doneArray = [...zeroArray, ...nonZeroArray]
         }
+
         for (let i  = 0; i < heightGame; i++) { 
             game_array[i][v] = doneArray[i]
         } 
-
       }
-
     }
-
   }
+
   function createRandom() {
-   let randI = Math.floor(Math.random() * heightGame) 
+
+    let randI = Math.floor(Math.random() * heightGame) 
     let randV = Math.floor(Math.random() * widthGame)
+
     if (game_array[randI][randV] == 0) {
       game_array[randI][randV] = 2
     } else {
       createRandom()
     }
-
   }
 
   function compress(dir) {
@@ -122,14 +128,16 @@ function App() {
       }
     }
   }
+
   function merge(dir) {
     shoveArray(dir)
     compress(dir)
     shoveArray(dir)
     createRandom()
     printGameArray()
-    setTicker(updateTicker + 1)
+    setTicker(update_ticker + 1)
   }
+
   return (
     <div className="App">
       <header className="App-header">
