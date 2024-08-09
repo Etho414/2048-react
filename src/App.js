@@ -163,13 +163,11 @@ function App() {
           { 
             game_array.map(
               (msg, index) => {
-              console.log(msg, index);
               return (
                 <div className="gameRow" key={index} style = {{height: heightGamePercent}}>
                   {
                     msg.map(
                       (numberVal, iindex) => {
-                        console.log(numberVal);
                         return (
                           <label className = "gameLabel" key={iindex} style={{width: widthGamePercent}} >
 
