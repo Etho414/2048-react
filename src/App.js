@@ -3,19 +3,19 @@ import React, {useState} from 'react';
 import './App.css';
 
 function App() {
-  const heightGame = 4
-  const widthGame = 4
-  const heightGamePercent = 100/heightGame + "%"
-  const widthGamePercent = 100/widthGame + "%"
+  const game_height = 4
+  const game_width = 4
+  const game_height_percent = 100 / game_height + "%"
+  const game_width_percent = 100 / game_width + "%"
   let [game_array] = useState([])
   const [loaded_game, setLoadGame] = useState(false)
   const [update_ticker, setTicker] = useState(0)
 
   function constructGameArray() {
-    for (let i = 0; i < heightGame; i++) {
+    for (let i = 0; i < game_height; i++) {
+      game_array[i] = new Array(game_width);
 
-      game_array[i] = new Array(widthGame);
-      for (let v = 0; v < widthGame; v++) {
+      for (let v = 0; v < game_width; v++) {
         game_array[i][v] = 2;
       }
     }
@@ -43,12 +43,12 @@ function App() {
 
   function shoveArray(dir) { 
     if (dir == "r" || dir == "l") {
-      for (let i = 0; i < heightGame; i++) {
+      for (let i = 0; i < game_height; i++) {
 
         let zeroArray = []
         let nonZeroArray = []
 
-        for (let v = 0; v < widthGame; v++) {
+        for (let v = 0; v < game_width; v++) {
           if (game_array[i][v] == 0) {
             zeroArray.push(0)
           }  else {
@@ -68,11 +68,11 @@ function App() {
       }
     } else if (dir == "u"  || dir == "d") {
       
-      for (let v = 0; v < widthGame; v++) {
+      for (let v = 0; v < game_width; v++) {
         let zeroArray = []
         let nonZeroArray = []
 
-        for (let i  = 0; i < heightGame; i++) { 
+        for (let i  = 0; i < game_height; i++) { 
             if (game_array[i][v] == 0) {
               zeroArray.push(0) 
             } else {
@@ -88,7 +88,7 @@ function App() {
           doneArray = [...zeroArray, ...nonZeroArray]
         }
 
-        for (let i  = 0; i < heightGame; i++) { 
+        for (let i  = 0; i < game_height; i++) { 
             game_array[i][v] = doneArray[i]
         } 
       }
@@ -97,8 +97,8 @@ function App() {
 
   function createRandom() {
 
-    let randI = Math.floor(Math.random() * heightGame) 
-    let randV = Math.floor(Math.random() * widthGame)
+    let randI = Math.floor(Math.random() * game_height) 
+    let randV = Math.floor(Math.random() * game_width)
 
     if (game_array[randI][randV] == 0) {
       game_array[randI][randV] = 2
@@ -118,8 +118,8 @@ function App() {
         }
       }
     } else if (dir == "u" || dir == "d") {
-      for (let v = 0; v < widthGame; v++) {
-        for (let i  = 0; i < heightGame - 1; i++) { 
+      for (let v = 0; v < game_width; v++) {
+        for (let i  = 0; i < game_height - 1; i++) { 
           if (game_array[i][v] == game_array[i+1][v]) {
             multSpot(i,v)
             removeSpot(i+1,v)
@@ -146,12 +146,12 @@ function App() {
             game_array.map(
               (msg, index) => {
               return (
-                <div className="gameRow" key={index} style = {{height: heightGamePercent}}>
+                <div className="gameRow" key={index} style = {{height: game_height_percent}}>
                   {
                     msg.map(
                       (numberVal, iindex) => {
                         return (
-                          <label className = "gameLabel" key={iindex} style={{width: widthGamePercent}} >
+                          <label className = "gameLabel" key={iindex} style={{width: game_width_percent}} >
 
                             {numberVal}
                           </label>
