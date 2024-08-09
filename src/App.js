@@ -7,7 +7,7 @@ function App() {
   const widthGame = 4
   const heightGamePercent = 100/heightGame + "%"
   const widthGamePercent = 100/widthGame + "%"
-  let [game_array, setGameArray] = useState([])
+  let [game_array] = useState([])
   const [loaded_game, setLoadGame] = useState(false)
   const [updateTicker, setTicker] = useState(0)
 
