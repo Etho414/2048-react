@@ -100,61 +100,35 @@ function App() {
     }
 
   }
-  function compressLR() {
-    for (let i = 0; i < game_array.length; i++) {
-      for (let v = 0; v < game_array[i].length - 1; v++) {
-        if (game_array[i][v] && game_array[i][v] == game_array[i][v + 1] ) {
-          multSpot(i,v)
-          removeSpot(i,v + 1)
-        } 
+
+  function compress(dir) {
+    if (dir == "r" || dir == "l") {
+      for (let i = 0; i < game_array.length; i++) {
+        for (let v = 0; v < game_array[i].length - 1; v++) {
+          if (game_array[i][v] && game_array[i][v] == game_array[i][v + 1] ) {
+            multSpot(i,v)
+            removeSpot(i,v + 1)
+          } 
+        }
+      }
+    } else if (dir == "u" || dir == "d") {
+      for (let v = 0; v < widthGame; v++) {
+        for (let i  = 0; i < heightGame - 1; i++) { 
+          if (game_array[i][v] == game_array[i+1][v]) {
+            multSpot(i,v)
+            removeSpot(i+1,v)
+          }
+        }
       }
     }
   }
-  function compressUD() {
-    for (let v = 0; v < widthGame; v++) {
-      for (let i  = 0; i < heightGame - 1; i++) { 
-        if (game_array[i][v] == game_array[i+1][v]) {
-          multSpot(i,v)
-          removeSpot(i+1,v)
-        }
-      }
-    } 
-
-  }
-  function mergeRight() {
-    shoveArray("r") 
-    compressLR()
-    shoveArray("r")
+  function merge(dir) {
+    shoveArray(dir)
+    compress(dir)
+    shoveArray(dir)
     createRandom()
     printGameArray()
     setTicker(updateTicker + 1)
-
-  }
-  function mergeLeft() {
-    shoveArray("l")
-    compressLR()
-    shoveArray("l")
-    createRandom()
-    printGameArray()
-    setTicker(updateTicker + 1)
-  }
-  function mergeUp() {
-    shoveArray("u")
-    compressUD()
-    shoveArray("u")
-    createRandom()
-    printGameArray()
-    setTicker(updateTicker + 1)
-  }
-  function mergeDown() {
-    shoveArray("d")
-    compressUD()
-    shoveArray("d")
-    createRandom()
-
-    printGameArray()
-    setTicker(updateTicker + 1)
-  
   }
   return (
     <div className="App">
@@ -183,16 +157,16 @@ function App() {
             )
           }
         </div>
-          <button className="merge-right" onClick={mergeRight}>
+          <button className="merge-right" onClick={() => merge("r")}>
             Merge Right 
           </button>
-          <button className="merge-left" onClick={mergeLeft}>
+          <button className="merge-left" onClick={() => merge("l")}>
             Merge Left 
           </button>
-          <button className="merge-up" onClick={mergeUp}>
+          <button className="merge-up" onClick={() => merge("u")}>
             Merge up 
           </button>
-          <button className="merge-down" onClick={mergeDown}>
+          <button className="merge-down" onClick={() => merge("d")}>
             Merge Down 
           </button>
       </header>
