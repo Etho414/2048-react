@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import './App.css';
 
@@ -6,9 +7,10 @@ function App() {
   const widthGame = 4
   const heightGamePercent = 100/heightGame + "%"
   const widthGamePercent = 100/widthGame + "%"
-  const game_array = []
-  const [game_arrayWithState, setStateArray] = useState([]); 
-  
+  let [game_array, setGameArray] = useState([])
+  const [loaded_game, setLoadGame] = useState(false)
+  const [updateTicker, setTicker] = useState(0)
+
   function constructGameArray() {
     for (let i = 0; i < heightGame; i++) {
 
@@ -18,7 +20,11 @@ function App() {
       }
     }
   }
-  constructGameArray()
+  if (loaded_game == false) {
+    console.log("Loading")
+    constructGameArray()
+    setLoadGame(true)
+  }
   function printGameArray() {
     let string = ""
     for (let i = 0; i < game_array.length; i++) {
@@ -30,7 +36,7 @@ function App() {
   function multSpot(x,y) {
     game_array[x][y] = game_array[x][y] * 2;
   }
-  
+
   function removeSpot(x,y) {
     game_array[x][y] = 0;
   }
@@ -121,7 +127,8 @@ function App() {
     shoveArray("r")
     createRandom()
     printGameArray()
-    setStateArray()
+    setTicker(updateTicker + 1)
+
   }
   function mergeLeft() {
     shoveArray("l")
@@ -129,7 +136,7 @@ function App() {
     shoveArray("l")
     createRandom()
     printGameArray()
-
+    setTicker(updateTicker + 1)
   }
   function mergeUp() {
     shoveArray("u")
@@ -137,13 +144,16 @@ function App() {
     shoveArray("u")
     createRandom()
     printGameArray()
+    setTicker(updateTicker + 1)
   }
   function mergeDown() {
     shoveArray("d")
     compressUD()
     shoveArray("d")
     createRandom()
+
     printGameArray()
+    setTicker(updateTicker + 1)
   
   }
   return (
