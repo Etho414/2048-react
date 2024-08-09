@@ -1,17 +1,20 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
 function App() {
-  const heightGame = 6
-  const widthGame = 6
+  const heightGame = 4
+  const widthGame = 4
+  const heightGamePercent = 100/heightGame + "%"
+  const widthGamePercent = 100/widthGame + "%"
   const game_array = []
+  const [game_arrayWithState, setStateArray] = useState([]); 
   
   function constructGameArray() {
     for (let i = 0; i < heightGame; i++) {
 
       game_array[i] = new Array(widthGame);
       for (let v = 0; v < widthGame; v++) {
-        game_array[i][v] = 0;
+        game_array[i][v] = 2;
       }
     }
   }
@@ -27,7 +30,7 @@ function App() {
   function multSpot(x,y) {
     game_array[x][y] = game_array[x][y] * 2;
   }
-
+  
   function removeSpot(x,y) {
     game_array[x][y] = 0;
   }
@@ -118,7 +121,7 @@ function App() {
     shoveArray("r")
     createRandom()
     printGameArray()
-
+    setStateArray()
   }
   function mergeLeft() {
     shoveArray("l")
@@ -146,6 +149,32 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <div className="gameWindow">
+          { 
+            game_array.map(
+              (msg, index) => {
+              console.log(msg, index);
+              return (
+                <div className="gameRow" key={index} style = {{height: heightGamePercent}}>
+                  {
+                    msg.map(
+                      (numberVal, iindex) => {
+                        console.log(numberVal);
+                        return (
+                          <label className = "gameLabel" key={iindex} style={{width: widthGamePercent}} >
+
+                            {numberVal}
+                          </label>
+                        );
+                      }
+                    )
+                  }
+                </div>
+              );
+              }
+            )
+          }
+        </div>
           <button className="merge-right" onClick={mergeRight}>
             Merge Right 
           </button>
